@@ -1,0 +1,175 @@
+\documentclass[12pt]{article}
+
+%VARIABLES
+\def \geometryDefault {
+	a4paper,
+	left=35mm,
+	right=20mm,
+	top=25mm,
+	bottom=25mm
+}
+\def \geometryTitlePage {
+	left=25mm,
+	right=25mm,
+	top=25mm,
+	bottom=25mm
+}
+\def \geometryGraduationCard {
+	left=25mm,
+	right=10mm,
+	top=25mm,
+	bottom=25mm
+}
+\def \geometryStatement {
+	left=25mm,
+	right=10mm,
+	top=25mm,
+	bottom=25mm
+}
+
+%page settings
+\usepackage[\geometryDefault]{geometry}% margins
+\usepackage{times} % Times New Roman
+\setlength{\parindent}{1cm} % tab indentation
+\linespread{1.5} % interline
+\usepackage{indentfirst} % tab the first line in a section
+
+%language settings
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{csquotes}
+\DeclareQuoteAlias{croatian}{polish} % croatian has the same properties as polish
+
+%code options
+\usepackage{listings}
+\usepackage{xcolor}
+
+\colorlet{punct}{red!60!black}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    %numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    frame=single,
+    %showstringspaces=false,
+    breaklines=true,
+    captionpos=b,
+    escapeinside={\%*}{*)},
+    literate={ą}{{\k{a}}}1
+             {Ą}{{\k{A}}}1
+             {ę}{{\k{e}}}1
+             {Ę}{{\k{E}}}1
+             {ó}{{\'o}}1
+             {Ó}{{\'O}}1
+             {ś}{{\'s}}1
+             {Ś}{{\'S}}1
+             {ł}{{\l{}}}1
+             {Ł}{{\L{}}}1
+             {ż}{{\.z}}1
+             {Ż}{{\.Z}}1
+             {ź}{{\'z}}1
+             {Ź}{{\'Z}}1
+             {ć}{{\'c}}1
+             {Ć}{{\'C}}1
+             {ń}{{\'n}}1
+             {Ń}{{\'N}}1
+}
+
+\renewcommand\lstlistingname{Kod źródłowy}
+\renewcommand{\lstlistlistingname}{Kody źródłowe}
+
+%Here I change numeric pattern to include chapter number
+\usepackage{chngcntr}
+\AtBeginDocument{\counterwithin{lstlisting}{section}} %listings
+\AtBeginDocument{\counterwithin{figure}{section}} %images
+
+%Make images captions to be on the bottom
+%\usepackage{floatrow}
+
+%Define new block, so that if a code is split between 2 pages, then it moves it to the second one.
+\lstnewenvironment{code}[1][]%
+{
+   \noindent\newline
+   \minipage{\linewidth} 
+   \vspace{0.5\baselineskip}
+   \lstset{frame=single,#1}}
+{\endminipage}
+
+%images settings
+\usepackage{graphicx}
+
+%lorem ipsum
+\usepackage{lipsum}
+
+%nomenclature
+\usepackage{nomencl}
+\makenomenclature
+
+%turn off the warnings
+\hfuzz=20pt
+\vfuzz=20pt
+\hbadness=20000
+\vbadness=\maxdimen
+
+%allows referencing sections  to return names, not numbers
+\usepackage[hidelinks]{hyperref}
+
+
+%START
+\begin{document}
+
+%TITLE PAGE
+\include{texParts/titlePage}
+
+\setcounter{page}{2}
+
+%GRADUATION PAGE (karta dyplomowa)
+\include{texParts/graduationPage}
+
+%THESIS SUMMARY
+\include{texParts/thesisPage}
+
+%STATEMENT
+\include{texParts/statementPage}
+
+%TABLE OF CONTENTS (spis treści)
+\tableofcontents
+
+%-----------------YOUR CONTENT STARTS HERE-------------------
+\include{texParts/introductionPage}
+
+%IMPLEMENTATION PROCESS
+\section{Proces implementacji}
+
+\input{texParts/examplePage}
+
+\include{texParts/examplePage2}
+
+
+%----------------YOUR CONTENT ENDS HERE---------------------
+
+\clearpage
+%BIBLIOGRAPHY
+\addcontentsline{toc}{section}{Literatura}
+\bibliographystyle{IEEEtran}
+\bibliography{bib/bibliography}
+
+%NOMENCLATURE
+\printnomenclature
+
+%LISTINGS
+\clearpage
+\pagenumbering{gobble}
+\addcontentsline{toc}{section}{Kody źródłowe}
+\lstlistoflistings
+
+%DRAWINGS
+\clearpage
+\addcontentsline{toc}{section}{Spis rysunków}
+\listoffigures
+
+\end{document}

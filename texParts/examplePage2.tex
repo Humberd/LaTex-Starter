@@ -1,0 +1,29 @@
+\subsection{Wielojęzyczność}
+	Gry e-sportowe nie ograniczają się do wąskiej grupy ludzi z jednego kraju. Zrzeszają graczy z całego świata, którzy często znają tylko jeden język. Dlatego gry te posiadają wsparcie dla wielu języków, ponieważ użytkownik nie będzie szukał gry, do której będzie się musiał dostosować, a raczej takiej, która się dostosuje do niego. W tej aplikacji również nie ograniczono się do jednego języka, a rozszerzalność na kolejne odbywa się na zasadzie przetłumaczenia pliku z tłumaczeniami i dodanie w opcjach nowego języka.
+
+	\subsubsection*{Biblioteka \blockquote{angular-translate}}
+		Do wprowadzenia wielojęzyczności użyta została biblioteka \blockquote{angular-translate} \cite{ref:angularTranslateDoc}. Jest to moduł do frameworka AngularJS, który ma przydatne w użyciu dyrektywy, filtry i serwisy, oraz posiada fazę konfiguracji, w której można spersonalizować działanie za pomocą dostępnych opcji.\par
+		 Podczas startu aplikacji, aby wybrać język, w pierwszej kolejności sprawdzany jest Local Storage. Następnie sprawdzany jest obecny język przeglądarki. Jeśli obie te metody zawiodą, to wybrany zostaje język domyślny (angielski). Nowo wybrany język jest automatycznie zapisywany do Local Storage.\par
+		 Każdy język posiada tłumaczenie w oddzielnym pliku w formacie JSON. Rozdziela to funkcjonalność od reszty kodu w aplikacji. Inną zaletą jest ułatwienie zarządzania treścią, ponieważ łatwiej jest manipulować sformułowaniami w jednym pliku, niż w bardzo wielu nieczytelnych widokach HTML. Przykład takiego tłumaczenia można zobaczyć w kodzie źródłowym \ref{lis:translation}. W przypadku braku konkretnego klucza w tłumaczeniu wyświetlany jest komunikat w  docelowym miejscu na stronie oraz w konsoli (kod źródłowy \ref{lis:missingTranslation}). Informuje on o tym, który klucz należy uzupełnić i w jakim języku. Informacja ta jest lokalna, ale w razie rozwoju aplikacji można by w takim wypadku wysyłać ją do serwera, który poinformuje dewelopera o błędach.
+		 
+\begin{code}[
+  language=json,
+  caption={Komunikat informujący o brakującym kluczu w tłumaczeniu},
+  label={lis:missingTranslation}]
+Missing_Translation - [APP-NAME, pl]
+\end{code}	 
+		 
+\begin{code}[
+  language=json,
+  caption={Przykład polskiego tłumaczenia w formacie JSON},
+  label={lis:translation}]
+{
+  "USERNAME": "Nazwa użytkownika",
+  "EMAIL": "Email",
+  "PASSWORD": "Hasło",
+  "REPEAT-PASSWORD": "Powtórz hasło",
+  "DEFAULT-VALIDATOR-MESSAGES": {
+    "REQUIRED": "To pole jest wymagane!"
+  }
+}
+\end{code}
