@@ -39,6 +39,7 @@ you would have to close the page and then compile it.
  3. Click **Define current document as 'Master Document'** while having `main.tex` opened.
  
 Now you can hit **F1** and the document will compile successfully on whatever the page you are.
+**Keep in mind you have to do it every time you open the Texmaker.**
 
 ------
 
