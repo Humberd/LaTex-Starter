@@ -7,23 +7,43 @@
 		 Każdy język posiada tłumaczenie w oddzielnym pliku w formacie JSON. Rozdziela to funkcjonalność od reszty kodu w aplikacji. Inną zaletą jest ułatwienie zarządzania treścią, ponieważ łatwiej jest manipulować sformułowaniami w jednym pliku, niż w bardzo wielu nieczytelnych widokach HTML. Przykład takiego tłumaczenia można zobaczyć w kodzie źródłowym \ref{lis:translation}. W przypadku braku konkretnego klucza w tłumaczeniu wyświetlany jest komunikat w  docelowym miejscu na stronie oraz w konsoli (kod źródłowy \ref{lis:missingTranslation}). Informuje on o tym, który klucz należy uzupełnić i w jakim języku. Informacja ta jest lokalna, ale w razie rozwoju aplikacji można by w takim wypadku wysyłać ją do serwera, który poinformuje dewelopera o błędach.
 		 
 \begin{code}[
-  language=json,
-  caption={Komunikat informujący o brakującym kluczu w tłumaczeniu},
-  label={lis:missingTranslation}]
-Missing_Translation - [APP-NAME, pl]
-\end{code}	 
-		 
-\begin{code}[
-  language=json,
-  caption={Przykład polskiego tłumaczenia w formacie JSON},
-  label={lis:translation}]
-{
-  "USERNAME": "Nazwa użytkownika",
-  "EMAIL": "Email",
-  "PASSWORD": "Hasło",
-  "REPEAT-PASSWORD": "Powtórz hasło",
-  "DEFAULT-VALIDATOR-MESSAGES": {
-    "REQUIRED": "To pole jest wymagane!"
-  }
+		language=javascript,
+		caption={Problem synchronizacji stanu aplikacji w jQuery (źródło: opracowanie własne)},
+		label={lis:jquery-state-sync-problem},
+		escapechar=|
+	]
+var user = { |\label{line:jquery-user}|
+  name: "John",
+  age: 25
 }
-\end{code}
+
+function updateDOMUser() { |\label{line:jquery-update-dom}|
+  \$("#userName").text(user.name)
+  \$("#userAge").text(user.age)
+}
+
+user = getNewUser() |\label{line:jquery-user-get}|
+updateDOMUser()
+
+	\end{code}\\
+	
+	W kodzie źródłowym \ref{lis:jquery-state-sync-problem} przedstawiony został ... W linijce \ref{line:jquery-user} widać obiekt usera.
+	
+\clearpage
+
+\begin{table} % you can add [!ht] here to make this table always float to the top
+		\centering
+		\caption{Parametry sprzętu, na którym przeprowadzone zostały testy aplikacji webowych (źródło: opracowanie własne)}
+		\label{tab:comp-spec}
+    	\begin{tabular}{ | l | l |}
+    \hline
+    Nazwa & Wersja \\ \hline
+    Procesor & Intel Core i7-8700k 3,7GHz \\ \hline
+    Pamięć RAM & Corsair Venegeance LPX DDR4 3200MHz 32GB \\ \hline
+    Dysk twardy & Crucial 250 GB 2,5'' SATA SSD \\ \hline
+    System Operacyjny & Windows 10 Educational 64 bit, wersja 1803 \\ \hline
+    Przeglądarka & Google Chrome 64 bit, wersja 66.0.3359.181 \\ \hline
+    \end{tabular}
+\end{table}
+
+	W tabelce \ref{tab:comp-spec} pokazane zostały parametry sprzętu.

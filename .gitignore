@@ -233,3 +233,6 @@ TSWLatexianTemp*
 
 # standalone packages
 *.sta
+
+.idea
+out

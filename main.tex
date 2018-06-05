@@ -27,6 +27,7 @@
 	bottom=25mm
 }
 
+
 %page settings
 \usepackage[\geometryDefault]{geometry}% margins
 \usepackage{times} % Times New Roman
@@ -79,8 +80,33 @@
              {Ń}{{\'N}}1
 }
 
+\definecolor{keyword-pink}{rgb}{.98,.15,.45}
+\definecolor{comment-grey}{rgb}{.46,.44,.37}
+\definecolor{string-yellow}{rgb}{.5,.0,.0}
+\lstdefinelanguage{JavaScript}{
+  keywords={do, if, in, for, let, new, try, var, case, else, enum, eval, null, this, true, void, with, await, break, catch, class, const, false, super, throw, while, yield, delete, export, import, public, return, static, switch, typeof, default, extends, finally, package, private, continue, debugger, function, arguments, interface, protected, implements, instanceof},
+  keywordstyle=\color{keyword-pink}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{keyword-pink}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{<!--}{-->},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{comment-grey}\ttfamily,
+  stringstyle=\color{string-yellow}\ttfamily,
+  morestring=[b]',
+  morestring=[b]",
+  morestring=[b]`
+}
+
 \renewcommand\lstlistingname{Kod źródłowy}
 \renewcommand{\lstlistlistingname}{Kody źródłowe}
+
+\AtBeginDocument{%
+\renewcommand\tablename{Tabela}
+\renewcommand\listtablename{Spis tabel}
+}
 
 %Here I change numeric pattern to include chapter number
 \usepackage{chngcntr}
@@ -91,12 +117,23 @@
 %\usepackage{floatrow}
 
 %Define new block, so that if a code is split between 2 pages, then it moves it to the second one.
-\lstnewenvironment{code}[1][]%
-{
+\lstnewenvironment{code}[1][]{
    \noindent\newline
-   \minipage{\linewidth} 
+   \minipage{\linewidth}
    \vspace{0.5\baselineskip}
-   \lstset{frame=single,#1}}
+   \lstset{
+    extendedchars=true,
+    basicstyle=\footnotesize\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\footnotesize,
+   numbersep=9pt,
+   tabsize=2,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b,
+   	frame=none,#1}}
 {\endminipage}
 
 %images settings
@@ -115,61 +152,73 @@
 \hbadness=20000
 \vbadness=\maxdimen
 
-%allows referencing sections  to return names, not numbers
+%allows referencing sections to return names, not numbers
 \usepackage[hidelinks]{hyperref}
 
+\usepackage{pgfplots}
+\pgfplotsset{width=12.5cm, compat=1.16}
+
+\usepackage{caption}
+\captionsetup[table]{skip=10pt}
+
+\usepackage{float}
 
 %START
 \begin{document}
+    \pagenumbering{gobble}
+    %TITLE PAGE
+    \include{texParts/titlePage}
 
-%TITLE PAGE
-\include{texParts/titlePage}
+    %GRADUATION PAGE (karta dyplomowa)
+    \include{texParts/graduationPage}
 
-\setcounter{page}{2}
+    %THESIS SUMMARY
+    \include{texParts/thesisPage}
 
-%GRADUATION PAGE (karta dyplomowa)
-\include{texParts/graduationPage}
+    %STATEMENT
+    \include{texParts/statementPage}
 
-%THESIS SUMMARY
-\include{texParts/thesisPage}
+    %TABLE OF CONTENTS (spis treści)
+    \tableofcontents
 
-%STATEMENT
-\include{texParts/statementPage}
+    \clearpage
+    \pagenumbering{arabic}
 
-%TABLE OF CONTENTS (spis treści)
-\tableofcontents
+    %-----------------YOUR CONTENT STARTS HERE-------------------
+    \include{texParts/introductionPage}
 
-%-----------------YOUR CONTENT STARTS HERE-------------------
-\include{texParts/introductionPage}
+    %IMPLEMENTATION PROCESS
+    \section{Proces implementacji}
 
-%IMPLEMENTATION PROCESS
-\section{Proces implementacji}
+    \input{texParts/examplePage}
 
-\input{texParts/examplePage}
+    \include{texParts/examplePage2}
 
-\include{texParts/examplePage2}
+    %----------------YOUR CONTENT ENDS HERE---------------------
 
+    \clearpage
+    \pagenumbering{gobble}
+    %BIBLIOGRAPHY
+    \addcontentsline{toc}{section}{Literatura}
+    \bibliographystyle{IEEEtran}
+    \bibliography{bib/bibliography}
 
-%----------------YOUR CONTENT ENDS HERE---------------------
+    %NOMENCLATURE
+    \printnomenclature
 
-\clearpage
-%BIBLIOGRAPHY
-\addcontentsline{toc}{section}{Literatura}
-\bibliographystyle{IEEEtran}
-\bibliography{bib/bibliography}
+    %LISTINGS
+    \clearpage
+    \addcontentsline{toc}{section}{Kody źródłowe}
+    \lstlistoflistings
 
-%NOMENCLATURE
-\printnomenclature
+    %DRAWINGS
+    \clearpage
+    \addcontentsline{toc}{section}{Spis rysunków}
+    \listoffigures
 
-%LISTINGS
-\clearpage
-\pagenumbering{gobble}
-\addcontentsline{toc}{section}{Kody źródłowe}
-\lstlistoflistings
-
-%DRAWINGS
-\clearpage
-\addcontentsline{toc}{section}{Spis rysunków}
-\listoffigures
+    %TABLES
+    \clearpage
+    \addcontentsline{toc}{section}{Spis tabel}
+    \listoftables
 
 \end{document}
